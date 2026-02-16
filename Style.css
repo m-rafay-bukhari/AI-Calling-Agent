@@ -81,5 +81,31 @@
             color: #FFFFFF;
         }
 
+        @media(max-width: 768px){
+            nav {
+                padding: 1em,1.5em;
+            }
+            .menu{
+                gap: 1em;
+                font-size: 0.9em;
+            }
+            .logo{
+                font-size: 1.4em;
+            }
+            .hero{
+                padding: 4em 1.5em;
+            }
+            .hero h1{
+                font-size: 2em;
+            }
+            .hero p{
+                font-size: 1em;
+            }
+            .hero button{
+                padding: 0.8em 2em;
+                font-size: 1em;
+            }
+        }
+
 
 
