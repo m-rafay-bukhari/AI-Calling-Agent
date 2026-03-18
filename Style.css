@@ -27,6 +27,9 @@
         cursor: pointer;
             
         }
+        .menu {
+            flex-wrap: wrap;
+        }
         nav ul{
             list-style: none;
             display: flex;
@@ -80,17 +83,64 @@
             transform: scale(1.05);
             color: #FFFFFF;
         }
+        .auth-buttons {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        /* LOGIN BUTTON */
+
+        .login-btn {
+            text-decoration: none;
+            color: #CBD5E1;
+            padding: 0.45rem 1.2rem;
+            border: 1px solid #CBD5E1;
+            border-radius: 999px; 
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+            .login-btn:hover {
+                color: #FFFFFF;
+                border-color: #3B82F6;
+            }
+
+            /* SIGNUP BUTTON (PRIMARY) */
+
+            .signup-btn {
+                text-decoration: none;
+                background-color: #00F5FF;
+                color: #0F172A;
+                padding: 0.45rem 1.2rem;
+                border-radius: 999px; 
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .signup-btn:hover {
+                background-color: #3B82F6;
+                color: #FFFFFF;
+                transform: translateY(-1px);
+            }
+            
 
         @media(max-width: 768px){
             nav {
-                padding: 1em,1.5em;
+                padding: 1em 1.5em;
+                gap: 1em;
             }
             .menu{
                 gap: 1em;
                 font-size: 0.9em;
+                display: none;
             }
             .logo{
                 font-size: 1.4em;
+            }
+            .auth-buttons{
+                margin-left: auto;
             }
             .hero{
                 padding: 4em 1.5em;
