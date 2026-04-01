@@ -21,14 +21,11 @@
         }
         .logo{
             font-size: 2rem;
-        font-weight: 700;
-        color: #FFFFFF;
-        letter-spacing: 1px;
-        cursor: pointer;
-            
-        }
-        .menu {
-            flex-wrap: wrap;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: 1px;
+            cursor: pointer;
+                
         }
         nav ul{
             list-style: none;
@@ -41,11 +38,45 @@
             font-weight: 500;
             transition: color 0.3s;
         }
-
         nav ul li a:hover {
             color: #3B82F6;
         }
 
+        .auth-buttons{
+            display: flex;
+            gap:1em;
+            align-items: center;
+        }
+
+        .login-btn,.signup-btn{
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5em 1.5em;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .login-btn{
+            color: #CBD5E1;
+        }
+        .login-btn:hover{
+            color: #3B82F6;
+        }
+        .signup-btn{
+            background-color: #3B82F6;
+            color: #FFFFFF;
+        }
+        .signup-btn:hover{
+            background-color: #2563EB;
+            transform: scale(1.05);
+        }
+        
+        .hamburger{
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #FFFFFF;
+        }
+    
         .hero{
             display: flex;
             flex-direction: column;
@@ -83,79 +114,99 @@
             transform: scale(1.05);
             color: #FFFFFF;
         }
-        .auth-buttons {
-            display: flex;
-            gap: 0.8rem;
-            align-items: center;
-        }
-
-        /* LOGIN BUTTON */
-
-        .login-btn {
-            text-decoration: none;
-            color: #CBD5E1;
-            padding: 0.45rem 1.2rem;
-            border: 1px solid #CBD5E1;
-            border-radius: 999px; 
-            font-weight: 500;
-            transition: all 0.3s ease;
-            background: transparent;
-        }
-
-            .login-btn:hover {
-                color: #FFFFFF;
-                border-color: #3B82F6;
-            }
-
-            /* SIGNUP BUTTON (PRIMARY) */
-
-            .signup-btn {
-                text-decoration: none;
-                background-color: #00F5FF;
-                color: #0F172A;
-                padding: 0.45rem 1.2rem;
-                border-radius: 999px; 
-                font-weight: 600;
-                transition: all 0.3s ease;
-            }
-
-            .signup-btn:hover {
-                background-color: #3B82F6;
-                color: #FFFFFF;
-                transform: translateY(-1px);
-            }
-            
 
         @media(max-width: 768px){
             nav {
                 padding: 1em 1.5em;
-                gap: 1em;
             }
+            .hamburger{
+                display: block;
+            }
+            /*HIDE MENU*/
             .menu{
-                gap: 1em;
-                font-size: 0.9em;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                width: 100%;
+                background-color: #1E293B;
+                flex-direction: column;
+                align-items: center;
+                gap:1.5em;
+                padding: 2em 0;
                 display: none;
             }
+            /*ACTIVE MENU*/
+            .menu.active{
+                display: flex;
+            }
+
+            /* HIDE AUTH BUTTON */
+            .auth-buttons{
+                display: none;
+            }
+
             .logo{
                 font-size: 1.4em;
             }
-            .auth-buttons{
-                margin-left: auto;
-            }
+
             .hero{
                 padding: 4em 1.5em;
             }
+
             .hero h1{
                 font-size: 2em;
             }
+
             .hero p{
                 font-size: 1em;
             }
+
             .hero button{
                 padding: 0.8em 2em;
                 font-size: 1em;
             }
         }
+        
+            /*From Styling*/
+        .form-container{
+            max-width: 400px;
+            margin: 100px auto;
+            background: #1E293B;
+            padding:2em;
+            border-radius: 12px;
+            text-align: center;
+            color:#FFFFFF
+        }
 
+        .form-container h2{
+            margin-bottom: 1em;
+        }
+
+        .from-container input{
+            width: 100%;
+            padding: 0.8em;
+            margin: 0.5em 0;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+        }
+
+        .form-container button{
+            width: 100%;
+            padding: 0.8em;
+            margin-top: 1em;
+            border: none;
+            border-radius: 8px;
+            background-color: #00F5FF;
+            color: #0F172A;
+            font-weight:600;
+            cursor: pointer;
+        }
+
+        .from-container button:hover{
+            background-color: #3B82F6;
+            color:#FFFFFF;
+        }
 
 
