@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Call Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">AI Call Agent</div>
+        <ul class="menu" id="nav-menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#featured-deals">Services</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="auth-buttons">
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+        <div class="hamburger" id="hamburger">&#9776;</div>
+    </nav>
+
+    <section class="hero">
+        <h1>Automate Your Customer Calls</h1>
+        <p>Generate AI-powered call scripts in Urdu &amp; English for your business leads.
+            Save time, increase sales, and manage your customers efficiently.</p>
+        <button>Get Started</button>
+    </section>
+
+    <section class="featured-deals" id="featured-deals">
+        <div class="section-header">
+            <h2>Featured <span>Deals</span></h2>
+            <p>Handpicked products — updated live from our catalogue</p>
+            <div class="live-badge" id="live-badge">
+                <span class="live-dot" id="live-dot"></span>
+                <span id="live-text">Connecting…</span>
+            </div>
+        </div>
+
+        <div id="products-container">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p>Loading featured deals…</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal" role="dialog" aria-modal="true">
+            <button class="modal-close" id="modal-close" aria-label="Close">&#x2715;</button>
+            <div class="modal-img-wrapper">
+                <img id="modal-img" src="" alt="">
+            </div>
+            <div class="modal-content">
+                <p class="modal-category" id="modal-category"></p>
+                <h2 class="modal-title" id="modal-title"></h2>
+                <p class="modal-description" id="modal-description"></p>
+                <div class="modal-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Price</span>
+                        <span class="stat-value price" id="modal-price"></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Rating</span>
+                        <span class="stat-value rating" id="modal-rating"></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Reviews</span>
+                        <span class="stat-value" id="modal-count"></span>
+                    </div>
+                </div>
+                <div class="modal-cta">
+                    <button class="btn-primary">Add to Cart</button>
+                    <button class="btn-secondary" id="modal-close-btn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
