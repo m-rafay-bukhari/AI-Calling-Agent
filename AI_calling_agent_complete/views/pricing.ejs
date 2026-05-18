@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Plans - AI Call Agent</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/pricing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <%- include('partials/navbar') %>
+
+    <div class="pricing-header">
+        <h1>Scale Your Business</h1>
+        <p>Choose the perfect plan for your outreach needs</p>
+    </div>
+
+    <div class="pricing-grid">
+        <!-- Free Plan -->
+        <div class="pricing-card">
+            <div class="plan-name">Free Trial</div>
+            <div class="plan-price">$0<span>/forever</span></div>
+            <ul class="plan-features">
+                <li>3 AI script generations</li>
+                <li>Standard English/Urdu models</li>
+                <li>Email support</li>
+                <li>Basic call templates</li>
+            </ul>
+            <button class="btn-plan btn-free">Current Plan</button>
+        </div>
+
+        <!-- Basic Plan -->
+        <div class="pricing-card">
+            <div class="plan-name">Basic</div>
+            <div class="plan-price">$19<span>/mo</span></div>
+            <ul class="plan-features">
+                <li>20 AI script generations</li>
+                <li>Save unlimited favorites</li>
+                <li>Priority email support</li>
+                <li>Custom tone selection</li>
+            </ul>
+            <button class="btn-plan btn-basic" onclick="alert('Payment gateway integration coming soon!')">Upgrade Now</button>
+        </div>
+
+        <!-- Pro Plan -->
+        <div class="pricing-card popular">
+            <div class="popular-badge">Most Popular</div>
+            <div class="plan-name">Professional</div>
+            <div class="plan-price">$49<span>/mo</span></div>
+            <ul class="plan-features">
+                <li>100 AI script generations</li>
+                <li>Advanced Llama-3 models</li>
+                <li>Roman Urdu support</li>
+                <li>24/7 Priority Support</li>
+                <li>Export scripts as PDF</li>
+            </ul>
+            <button class="btn-plan btn-pro" onclick="alert('Payment gateway integration coming soon!')">Get Started</button>
+        </div>
+
+        <!-- Enterprise Plan -->
+        <div class="pricing-card">
+            <div class="plan-name">Enterprise</div>
+            <div class="plan-price">Custom</div>
+            <ul class="plan-features">
+                <li>Unlimited generations</li>
+                <li>Custom model training</li>
+                <li>API access for CRM</li>
+                <li>Dedicated Account Manager</li>
+                <li>On-site training</li>
+            </ul>
+            <button class="btn-plan btn-enterprise" onclick="alert('Our sales team will contact you soon!')">Contact Sales</button>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

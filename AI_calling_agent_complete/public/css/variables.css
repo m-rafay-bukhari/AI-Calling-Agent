@@ -1,0 +1,28 @@
+:root {
+    /* Colors */
+    --color-bg: #0F172A;
+    --color-surface: #1E293B;
+    --color-surface-soft: rgba(30, 41, 59, 0.7);
+    --color-primary: #00F5FF;
+    --color-secondary: #3B82F6;
+    --color-accent: #EF4444;
+    --color-success: #10B981;
+    --color-text-main: #FFFFFF;
+    --color-text-muted: #CBD5E1;
+    --color-text-dark: #0F172A;
+    --color-border: #334155;
+    --color-border-soft: rgba(255, 255, 255, 0.1);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #00F5FF 0%, #3B82F6 100%);
+    --gradient-hero: linear-gradient(135deg, #1E293B, #0F172A);
+    
+    /* Shadows */
+    --shadow-sm: 0 4px 15px rgba(59, 130, 246, 0.3);
+    --shadow-md: 0 6px 20px rgba(0, 245, 255, 0.4);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    
+    /* Transitions */
+    --transition-fast: 0.3s ease;
+    --transition-standard: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

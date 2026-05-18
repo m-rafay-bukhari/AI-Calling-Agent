@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up - AI Call Agent</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <div class="form-container">
+        <h2>Join Us</h2>
+        <p class="auth-footer-text">Create your business account</p>
+
+        <% if(error_msg && error_msg.length > 0) { %>
+            <div class="alert alert-error"><%= error_msg %></div>
+        <% } %>
+
+        <form id="signupForm" action="/signup" method="POST" onsubmit="setLoading(this)">
+           <input type="text" name="name" placeholder="Full Name" required>
+           <input type="email" name="email" placeholder="Email Address" required>
+           <div class="password-field">
+                <input type="password" name="password" id="signupPass" placeholder="Create Password" required minlength="6">
+                <span class="password-toggle" onclick="togglePass('signupPass')">👁️</span>
+           </div>
+           <button type="submit" id="submitBtn">Create Account</button>
+        </form>
+        
+        <p class="auth-footer-text">Already have an account? <a href="/login" class="auth-link">Log in</a></p>
+    </div>
+
+    <script>
+        function togglePass(id) {
+            const el = document.getElementById(id);
+            el.type = el.type === 'password' ? 'text' : 'password';
+        }
+        function setLoading(form) {
+            document.getElementById('submitBtn').classList.add('btn-loading');
+        }
+    </script>
+
+    <script src="/signup_script.js"></script>
+
+</body>
+</html>

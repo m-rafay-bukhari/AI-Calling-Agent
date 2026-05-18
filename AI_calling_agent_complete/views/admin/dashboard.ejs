@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+
+    <div class="admin-container">
+        <% if(success_msg && success_msg.length > 0) { %>
+            <div class="alert alert-success-solid"><%= success_msg %></div>
+        <% } %>
+        <% if(error_msg && error_msg.length > 0) { %>
+            <div class="alert alert-error-solid alert"><%= error_msg %></div>
+        <% } %>
+
+        <div class="admin-header">
+            <h2>Product Management</h2>
+            <a href="/admin/products/new" class="btn-add">+ Add New Product</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% products.forEach(function(product) { %>
+                    <tr>
+                        <td data-label="Image"><img src="<%= product.image %>" alt="<%= product.name %>"></td>
+                        <td data-label="Name"><%= product.name %></td>
+                        <td data-label="Price">$<%= product.price %></td>
+                        <td data-label="Category"><%= product.category %></td>
+                        <td data-label="Stock"><%= product.stock %></td>
+                        <td data-label="Actions" class="action-btns">
+                            <a href="/admin/products/edit/<%= product._id %>" class="btn-edit">Edit</a>
+                            <form action="/admin/products/delete/<%= product._id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');" class="inline-block">
+                                <button type="submit" class="btn-delete">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

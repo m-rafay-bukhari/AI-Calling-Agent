@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Script Generator - AI Call Agent</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/generator.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <%- include('partials/navbar') %>
+
+    <div class="generator-container">
+        
+        <div class="form-section">
+            <h2 class="section-heading-primary">AI Script Generator</h2>
+            <p class="section-subheading">Free Generations Remaining: <strong><%= user.remainingGenerations %></strong></p>
+            
+            <form id="generatorForm">
+                <div class="form-group">
+                    <label>Business Name</label>
+                    <input type="text" id="businessName" required placeholder="e.g. Apex Real Estate">
+                </div>
+                <div class="form-group">
+                    <label>Business Type</label>
+                    <input type="text" id="businessType" required placeholder="e.g. Real Estate Agency">
+                </div>
+                <div class="form-group">
+                    <label>Target Audience</label>
+                    <input type="text" id="targetAudience" required placeholder="e.g. First-time homebuyers">
+                </div>
+                <div class="form-group">
+                    <label>Goal of Call</label>
+                    <input type="text" id="goal" required placeholder="e.g. Book a property viewing">
+                </div>
+                <div class="form-group">
+                    <label>Script Type</label>
+                    <select id="scriptType" required>
+                        <option value="Cold Calling">Cold Calling</option>
+                        <option value="Lead Qualification">Lead Qualification</option>
+                        <option value="Appointment Setting">Appointment Setting</option>
+                        <option value="Sales Pitch">Sales Pitch</option>
+                        <option value="Customer Support">Customer Support</option>
+                        <option value="Follow-up">Follow-up</option>
+                    </select>
+                </div>
+                <div class="flex-row gap-1">
+                    <div class="form-group flex-1">
+                        <label>Tone</label>
+                        <select id="tone">
+                            <option value="Professional">Professional</option>
+                            <option value="Friendly">Friendly</option>
+                            <option value="Persuasive">Persuasive</option>
+                            <option value="Empathetic">Empathetic</option>
+                        </select>
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>Language</label>
+                        <select id="language">
+                            <option value="English">English</option>
+                            <option value="Urdu">Urdu</option>
+                            <option value="Roman Urdu">Roman Urdu</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Services Offered (Optional)</label>
+                    <textarea id="servicesOffered" placeholder="e.g. Property valuation, Mortgage consulting"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Customer Pain Points (Optional)</label>
+                    <textarea id="painPoints" placeholder="e.g. High interest rates, finding affordable homes"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-generate">Generate Script</button>
+                <div class="loading-spinner" id="loading">Generating your script... Please wait.</div>
+            </form>
+        </div>
+
+        <div class="output-section">
+            <h2 class="section-heading-secondary">Generated Output</h2>
+            <div class="output-box" id="outputBox">Your generated script will appear here.</div>
+        </div>
+
+        <% if(scripts && scripts.length > 0) { %>
+            <div class="history-section">
+                <h2 class="mb-1">Script History</h2>
+                <% scripts.forEach(function(script) { %>
+                    <div class="history-item">
+                        <h4><%= script.businessName %> - <%= script.scriptType %> (<%= script.language %>)</h4>
+                        <small class="text-muted">Generated on: <%= new Date(script.createdAt).toLocaleDateString() %></small>
+                        <p><%= script.generatedScript %></p>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <!-- Subscription Modal -->
+    <div id="subModal" class="sub-modal">
+        <div class="sub-modal-content">
+            <span class="close-sub" onclick="closeSubModal()">&times;</span>
+            <h2>Trial Limit Reached</h2>
+            <p>You have used all 3 of your free AI script generations. Upgrade to a premium plan to unlock unlimited access and advanced features.</p>
+            <a href="/pricing" class="btn-generate block">View Pricing Plans</a>
+            <button class="signup-btn btn-outline mt-1" onclick="closeSubModal()">Maybe Later</button>
+        </div>
+    </div>
+
+    <script>
+        function closeSubModal() {
+            document.getElementById('subModal').style.display = 'none';
+        }
+
+        document.getElementById('generatorForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.querySelector('.btn-generate');
+            const loading = document.getElementById('loading');
+            const outputBox = document.getElementById('outputBox');
+            
+            btn.style.display = 'none';
+            loading.style.display = 'block';
+            outputBox.innerText = '';
+
+            const data = {
+                businessName: document.getElementById('businessName').value,
+                businessType: document.getElementById('businessType').value,
+                targetAudience: document.getElementById('targetAudience').value,
+                goal: document.getElementById('goal').value,
+                scriptType: document.getElementById('scriptType').value,
+                tone: document.getElementById('tone').value,
+                language: document.getElementById('language').value,
+                servicesOffered: document.getElementById('servicesOffered').value,
+                painPoints: document.getElementById('painPoints').value
+            };
+
+            try {
+                const response = await fetch('/generator', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    outputBox.innerText = result.script;
+                    alert('Script generated successfully! Remaining free tries: ' + result.remaining);
+                    setTimeout(() => window.location.reload(), 2000); 
+                } else {
+                    outputBox.innerText = 'Error: ' + result.message;
+                    if(result.limitReached) {
+                        document.getElementById('subModal').style.display = 'block';
+                    }
+                }
+            } catch (err) {
+                outputBox.innerText = 'An unexpected error occurred.';
+                console.error(err);
+            } finally {
+                btn.style.display = 'block';
+                loading.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

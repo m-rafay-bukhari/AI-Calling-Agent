@@ -1,0 +1,37 @@
+about page not working
+
+login and signup UI needs polishing (the textfiels are basic html, and dont sit right with site asthetics)
+
+product details dont show up (when clicking on any product, its details dont show up as a modal)
+
+no user profle section (where user can edit their details)
+
+doesnt specify, whether the person logged in is an admin or a user;
+    if admin -- it should show "admin" on the top right of the screen where the profile section should exist
+    if user -- if shouls show user's name and his profile pic on the top right
+
+
+    All Above Issues Are Resolved !
+
+    Now New to do is :
+    1 : Add to Favourite feature to it 
+    2 : Add ai model that will generate call scripts for leads, cold outreaches,  apointmnet setting and more for
+        the business that come and register there self and provide there info then there script will be generated 
+        according to there need 
+
+Current Issues :
+1:Dont know how to add product to Favourite 
+change add to cart option to add to favourite  and that product should go to favourite page of user 
+
+2: User / admins profle section (where user can edit their details)
+while adding profile pic during editing it apare after saving edit profile pic dis appear for both admin and all users 
+
+3: After 3 free scripts a pop ap should appear that shows subscription plans which pop up banner should be canceld
+and again apperar when free trail user hit generate script only after 3 free tries 
+and give admin full access to generate 100+ scripts and allow him to see all users script history 
+
+4: In navigation bar when we are on home page generat option appear but when we go to about or product page generate page
+option disapear we have to go back to hame page to go to generate page make generate page visibale for all pages 
+
+5: Make this Complette web app mobile responsive without disturbing its functionality. Add hamburger menu option 
+in mobile ui showing all pages

@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  # ── MongoDB ────────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: ai-agent-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: ecommerce-app
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"   # remove this line if you don't need local access
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── App ────────────────────────────────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: ai-calling-agent
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.docker        # see .env.docker.example below
+    volumes:
+      # Persist user-uploaded files across container restarts
+      - uploads_data:/app/AI_calling_agent_complete/public/uploads
+
+volumes:
+  mongo_data:
+  uploads_data:

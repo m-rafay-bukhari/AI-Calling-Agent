@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites - AI Call Agent</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/products.css">
+    <link rel="stylesheet" href="/css/favorites.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-user-logged-in="<%= user ? 'true' : 'false' %>">
+
+    <%- include('partials/navbar') %>
+
+    <div class="container">
+        <h2>My Favorites</h2>
+        
+        <div class="products-grid mt-2">
+            <% if (favorites && favorites.length > 0) { %>
+                <% favorites.forEach(function(product) { %>
+                    <div class="product-card" id="card-<%= product._id %>">
+                        <button class="favorite-btn favorited" onclick="toggleFavorite(event, '<%= product._id %>')" title="Remove Favorite">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                        <img src="<%= product.image %>" alt="<%= product.name %>" onclick="window.location.href='/products'" class="cursor-pointer">
+                        <div class="product-info cursor-pointer" onclick="window.location.href='/products'">
+                            <h3><%= product.name %></h3>
+                            <p><%= product.category %></p>
+                            <div class="price">$<%= product.price %></div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>You haven't added any favorites yet.</p>
+                <a href="/products" class="browse-link">Browse Products</a>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <script>
+        async function toggleFavorite(event, productId) {
+            event.stopPropagation();
+            try {
+                const response = await fetch(`/favorites/toggle/${productId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Remove the card from the UI
+                    const card = document.getElementById('card-' + productId);
+                    if(card) {
+                        card.remove();
+                    }
+                    // If no more favorites, reload to show empty message
+                    if(document.querySelectorAll('.product-card').length === 0) {
+                        window.location.reload();
+                    }
+                }
+            } catch (error) {
+                console.error("Error toggling favorite:", error);
+            }
+        }
+    </script>
+</body>
+</html>

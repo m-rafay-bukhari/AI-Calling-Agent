@@ -1,0 +1,14 @@
+/* Favorites page specific styles */
+/* Uses many classes from products.css and main.css */
+
+.browse-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1em;
+    transition: color var(--transition-fast);
+}
+
+.browse-link:hover {
+    color: var(--color-secondary);
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AI Call Agent</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+
+    <div class="form-container">
+        <h2>Welcome Back</h2>
+        <p class="auth-footer-text">Log in to your account</p>
+
+        <% if(success_msg && success_msg.length > 0) { %>
+            <div class="alert alert-success"><%= success_msg %></div>
+        <% } %>
+        <% if(error_msg && error_msg.length > 0) { %>
+            <div class="alert alert-error"><%= error_msg %></div>
+        <% } %>
+
+        <form id="loginForm" action="/login" method="POST" onsubmit="setLoading(this)">
+            <input type="email" name="email" placeholder="Email Address" required>
+            <div class="password-field">
+                <input type="password" name="password" id="loginPass" placeholder="Password" required>
+                <span class="password-toggle" onclick="togglePass('loginPass')">👁️</span>
+            </div>
+            <button type="submit" id="submitBtn">Login</button>
+        </form>
+        <p class="auth-footer-text">Don't have an account? <a href="/signup" class="auth-link">Sign up</a></p>
+    </div>
+
+    <script>
+        function togglePass(id) {
+            const el = document.getElementById(id);
+            el.type = el.type === 'password' ? 'text' : 'password';
+        }
+        function setLoading(form) {
+            document.getElementById('submitBtn').classList.add('btn-loading');
+        }
+    </script>
+
+    <script src="/login_script.js"></script>
+</body>
+</html>

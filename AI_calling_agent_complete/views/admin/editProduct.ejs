@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - Admin</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+
+    <div class="admin-form-wrapper">
+        <h2>Edit Product</h2>
+        
+        <% if(error_msg && error_msg.length > 0) { %>
+            <div class="alert alert-error-solid alert"><%= error_msg %></div>
+        <% } %>
+
+        <form action="/admin/products/edit/<%= product._id %>" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Product Name</label>
+                <input type="text" id="name" name="name" value="<%= product.name %>" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="price">Price ($)</label>
+                <input type="number" step="0.01" id="price" name="price" value="<%= product.price %>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <% const categories = ['Electronics', 'Cameras', 'Laptops', 'Accessories', 'Headphones', 'Food', 'Books', 'Clothes/Shoes', 'Beauty/Health', 'Sports', 'Outdoor', 'Home']; %>
+                    <% categories.forEach(cat => { %>
+                        <option value="<%= cat %>" <%= product.category === cat ? 'selected' : '' %>><%= cat %></option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="stock">Stock Quantity</label>
+                <input type="number" id="stock" name="stock" value="<%= product.stock %>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" required><%= product.description %></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Current Image</label>
+                <br>
+                <img src="<%= product.image %>" class="current-image" alt="Current Image">
+            </div>
+
+            <div class="form-group">
+                <label for="image">Upload New Image (Leaves unchanged if blank)</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
+
+            <button type="submit" class="btn-submit">Update Product</button>
+        </form>
+    </div>
+</body>
+</html>

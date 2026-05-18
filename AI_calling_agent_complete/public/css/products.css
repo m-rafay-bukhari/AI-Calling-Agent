@@ -1,0 +1,150 @@
+.filters {
+    background-color: var(--color-surface);
+    padding: 1.5em;
+    border-radius: 12px;
+    margin-bottom: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    align-items: center;
+}
+
+.filters input, .filters select {
+    padding: 0.8em;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+}
+
+.filters button {
+    padding: 0.8em 2em;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--color-primary);
+    color: var(--color-text-dark);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.filters button:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-text-main);
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2em;
+}
+
+.product-card {
+    background-color: var(--color-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform var(--transition-fast);
+    position: relative;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(15, 23, 42, 0.7);
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+    z-index: 10;
+}
+
+.favorite-btn:hover {
+    background: rgba(15, 23, 42, 0.9);
+}
+
+.favorite-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: var(--color-text-muted);
+    stroke-width: 2;
+    transition: all var(--transition-fast);
+}
+
+.favorite-btn.favorited svg {
+    fill: var(--color-accent);
+    stroke: var(--color-accent);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 1.5em;
+}
+
+.product-info h3 {
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+}
+
+.product-info p {
+    color: var(--color-text-muted);
+    margin-bottom: 1em;
+    font-size: 0.9em;
+}
+
+.product-info .price {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 3em;
+}
+
+.pagination a {
+    padding: 0.5em 1em;
+    background-color: var(--color-surface);
+    color: var(--color-text-main);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background var(--transition-fast);
+}
+
+.pagination a.active {
+    background-color: var(--color-secondary);
+}
+
+.pagination a:hover {
+    background-color: #2563EB;
+}
+
+.features-list {
+    margin-top: 0.5em;
+    padding-left: 1.5em;
+    color: var(--color-text-muted);
+}
+
+.modal-fav-btn {
+    margin-top: 1em;
+    width: 100%;
+}

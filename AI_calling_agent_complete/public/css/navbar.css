@@ -1,0 +1,191 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 3em;
+    background-color: var(--color-surface);
+    color: var(--color-text-main);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2em;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+
+nav ul li a:hover {
+    color: var(--color-secondary);
+}
+
+.nav-admin-link {
+    color: var(--color-primary) !important;
+}
+
+.nav-logout-link {
+    color: var(--color-accent) !important;
+}
+
+.nav-fav-link {
+    margin-right: 10px;
+}
+
+.nav-heart-icon {
+    width: 20px;
+    height: 20px;
+    fill: var(--color-accent);
+    stroke: var(--color-accent);
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+.login-btn, .signup-btn {
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5em 1.5em;
+    border-radius: 8px;
+    transition: all var(--transition-fast);
+}
+
+.login-btn {
+    color: var(--color-text-muted);
+}
+
+.login-btn:hover {
+    color: var(--color-secondary);
+}
+
+.signup-btn {
+    background: var(--gradient-primary);
+    color: var(--color-text-dark);
+    box-shadow: var(--shadow-sm);
+}
+
+.signup-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    filter: brightness(1.1);
+    box-shadow: var(--shadow-md);
+    color: var(--color-text-dark);
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--color-text-main);
+}
+
+.mobile-only {
+    display: none;
+}
+
+/* Navbar Profile */
+.user-profile-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    color: var(--color-text-main);
+    text-decoration: none;
+    padding: 0.3em 0.8em;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: background var(--transition-fast);
+}
+
+.user-profile-nav:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.user-profile-nav img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-secondary);
+    background-color: var(--color-bg);
+}
+
+.admin-badge {
+    background-color: var(--color-accent);
+    color: white;
+    padding: 0.2em 0.6em;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 1em 1.5em;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .mobile-only {
+        display: block;
+    }
+
+    .menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: var(--color-surface);
+        flex-direction: column;
+        align-items: center;
+        gap: 2em;
+        padding: 3em 0;
+        transition: left 0.3s ease-in-out;
+        z-index: 999;
+        display: flex;
+    }
+
+    .menu.active {
+        left: 0;
+    }
+
+    .auth-buttons {
+        display: none;
+    }
+
+    .menu li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu li a {
+        font-size: 1.2rem;
+        display: block;
+        width: 100%;
+        padding: 0.5em;
+    }
+
+    .logo {
+        font-size: 1.4em;
+    }
+}

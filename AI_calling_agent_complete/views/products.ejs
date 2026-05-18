@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - AI Call Agent</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" href="/css/products.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-user-logged-in="<%= user ? 'true' : 'false' %>">
+
+    <%- include('partials/navbar') %>
+
+    <div class="container">
+        <h2>Our Products</h2>
+        
+        <form class="filters" method="GET" action="/products">
+            <input type="text" name="search" placeholder="Search products..." value="<%= searchQuery %>">
+            
+            <select name="category">
+                <option value="All">All Categories</option>
+                <% categories.forEach(function(category) { %>
+                    <option value="<%= category %>" <%= selectedCategory === category ? 'selected' : '' %>><%= category %></option>
+                <% }) %>
+            </select>
+
+            <input type="number" name="minPrice" placeholder="Min Price" value="<%= minPrice %>">
+            <input type="number" name="maxPrice" placeholder="Max Price" value="<%= maxPrice %>">
+            
+            <button type="submit">Filter</button>
+        </form>
+
+        <div class="products-grid">
+            <% if (products.length > 0) { %>
+                <% products.forEach(function(product) { %>
+                    <div class="product-card" id="card-<%= product._id %>">
+                        <button class="favorite-btn <%= userFavorites.includes(product._id.toString()) ? 'favorited' : '' %>" onclick="toggleFavorite(event, '<%= product._id %>')" title="Toggle Favorite">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                        <img src="<%= product.image %>" alt="<%= product.name %>" onclick="openModal('<%= product._id %>')" class="cursor-pointer">
+                        <div class="product-info cursor-pointer" onclick="openModal('<%= product._id %>')">
+                            <h3><%= product.name %></h3>
+                            <p><%= product.category %></p>
+                            <p><%= product.description.substring(0, 50) %>...</p>
+                            <div class="price">$<%= product.price %></div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No products found.</p>
+            <% } %>
+        </div>
+
+        <% if (totalPages > 1) { %>
+            <div class="pagination">
+                <% if (currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>&search=<%= searchQuery %>&category=<%= selectedCategory %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Previous</a>
+                <% } %>
+                
+                <% for(let i = 1; i <= totalPages; i++) { %>
+                    <a href="?page=<%= i %>&search=<%= searchQuery %>&category=<%= selectedCategory %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+                <% } %>
+
+                <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>&search=<%= searchQuery %>&category=<%= selectedCategory %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Next</a>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalBody" class="modal-body">
+                <!-- Dynamic Content Here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function toggleFavorite(event, productId) {
+            event.stopPropagation();
+
+            const isUserLoggedIn = document.body.dataset.userLoggedIn === 'true';
+            if (!isUserLoggedIn) {
+                alert("Please log in to add favorites.");
+                window.location.href = '/login';
+                return;
+            }
+
+            try {
+                const btn = event.currentTarget;
+                const response = await fetch(`/favorites/toggle/${productId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    if (result.favorited) {
+                        btn.classList.add('favorited');
+                    } else {
+                        btn.classList.remove('favorited');
+                        if(window.location.pathname === '/favorites') {
+                            const card = document.getElementById('card-' + productId);
+                            if(card) card.remove();
+                        }
+                    }
+                } else {
+                    alert(result.message || "Failed to toggle favorite");
+                }
+            } catch (error) {
+                console.error("Error toggling favorite:", error);
+                alert("An error occurred. Please try again.");
+            }
+        }
+        async function openModal(id) {
+            const modal = document.getElementById('productModal');
+            const modalBody = document.getElementById('modalBody');
+            
+            try {
+                const response = await fetch(`/api/v1/products/${id}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const product = result.data;
+                    const isFavorited = document.querySelector(`#card-${product._id} .favorite-btn`).classList.contains('favorited');
+                    
+                    modalBody.innerHTML = `
+                        <div class="modal-image">
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                        <div class="modal-details">
+                            <h2>${product.name}</h2>
+                            <p class="price">$${product.price}</p>
+                            <p class="category"><strong>Category:</strong> ${product.category}</p>
+                            <p class="stock"><strong>In Stock:</strong> ${product.stock}</p>
+                            <p class="rating"><strong>Rating:</strong> ⭐ ${product.rating || '0'}</p>
+                            <div class="my-1">
+                                <strong>Features:</strong>
+                                <ul class="features-list">
+                                    <li>AI-Powered Precision</li>
+                                    <li>Real-time Adaptation</li>
+                                    <li>Multilingual Support</li>
+                                </ul>
+                            </div>
+                            <p class="description">${product.description}</p>
+                            <button class="signup-btn modal-fav-btn" onclick="toggleFavoriteFromModal(event, '${product._id}')" id="modalFavBtn">
+                                ${isFavorited ? 'Remove from Favorites' : 'Add to Favorite'}
+                            </button>
+                        </div>
+                    `;
+                    modal.style.display = "block";
+                }
+            } catch (error) {
+                console.error('Error fetching product details:', error);
+            }
+        }
+
+        async function toggleFavoriteFromModal(event, productId) {
+            const cardBtn = document.querySelector(`#card-${productId} .favorite-btn`);
+            await toggleFavorite({ stopPropagation: () => {}, currentTarget: cardBtn }, productId);
+            const modalBtn = document.getElementById('modalFavBtn');
+            modalBtn.innerText = cardBtn.classList.contains('favorited') ? 'Remove from Favorites' : 'Add to Favorite';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('productModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+</html>

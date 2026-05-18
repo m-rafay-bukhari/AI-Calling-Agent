@@ -1,0 +1,25 @@
+# Dependencies (re-installed inside the image)
+node_modules/
+
+# Git history
+.git/
+.gitignore
+
+# Local env files (never bake secrets into the image)
+.env
+.env.*
+!.env.docker.example
+
+# Dev/test artefacts
+*.log
+coverage/
+.nyc_output/
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Old assignment sub-projects (not part of the main app)
+Assignment-2/
+Lab-Task-1-and-2_Assignment-1/
+Mid_lab/

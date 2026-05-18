@@ -1,0 +1,179 @@
+.admin-container {
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 2em;
+    background: var(--color-surface);
+    border-radius: 12px;
+    color: var(--color-text-main);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2em;
+}
+
+.btn-add {
+    padding: 0.8em 1.5em;
+    background-color: var(--color-primary);
+    color: var(--color-text-dark);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.btn-add:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-text-main);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+th, td {
+    padding: 1em;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+th {
+    background-color: var(--color-bg);
+    color: var(--color-text-muted);
+}
+
+td img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.action-btns {
+    display: flex;
+    gap: 0.5em;
+}
+
+.btn-edit {
+    background-color: var(--color-secondary);
+    color: white;
+    padding: 0.5em 1em;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.btn-delete {
+    background-color: var(--color-accent);
+    color: white;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+/* Admin Form Wrapper */
+.admin-form-wrapper {
+    max-width: 600px;
+    margin: 2em auto;
+    background: var(--color-surface);
+    padding: 2em;
+    border-radius: 12px;
+    color: var(--color-text-main);
+}
+
+.admin-form-wrapper .form-group {
+    margin-bottom: 1.5em;
+}
+
+.admin-form-wrapper .form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    color: var(--color-text-muted);
+}
+
+.admin-form-wrapper .form-group input, 
+.admin-form-wrapper .form-group select, 
+.admin-form-wrapper .form-group textarea {
+    width: 100%;
+    padding: 0.8em;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    border: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.admin-form-wrapper .form-group input:focus, 
+.admin-form-wrapper .form-group select:focus, 
+.admin-form-wrapper .form-group textarea:focus {
+    border-color: var(--color-primary);
+}
+
+.admin-form-wrapper .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 1em;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--color-primary);
+    color: var(--color-text-dark);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-text-main);
+}
+
+.current-image {
+    margin-top: 0.5em;
+    max-width: 200px;
+    border-radius: 6px;
+}
+
+.script-content { 
+    max-width: 300px; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    cursor: pointer; 
+    transition: color var(--transition-fast);
+}
+
+.script-content:hover { 
+    color: var(--color-primary); 
+}
+
+/* Table Responsiveness for Admin */
+@media (max-width: 600px) {
+    table thead { display: none; }
+    table, table tbody, table tr, table td { display: block; width: 100%; }
+    table tr { margin-bottom: 1em; background: var(--color-bg); padding: 1em; border-radius: 8px; }
+    table td { text-align: right; padding-left: 50%; position: relative; border: none; }
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: var(--color-secondary);
+    }
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Scripts - Admin</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+
+    <div class="admin-container">
+        <h2>User Generated Scripts</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Business</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Snippet</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% scripts.forEach(function(script) { %>
+                    <tr>
+                        <td data-label="User"><%= script.user ? script.user.name : 'Unknown' %><br><small><%= script.user ? script.user.email : '' %></small></td>
+                        <td data-label="Business"><%= script.businessName %></td>
+                        <td data-label="Type"><%= script.scriptType %></td>
+                        <td data-label="Date"><%= new Date(script.createdAt).toLocaleDateString() %></td>
+                        <td data-label="Snippet" class="script-content" title="<%= script.generatedScript %>"><%= script.generatedScript %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>
