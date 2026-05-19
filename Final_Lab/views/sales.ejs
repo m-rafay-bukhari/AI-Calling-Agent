@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        :root {
+            --card-bg: var(--color-surface);
+            --card-border: var(--color-border-soft);
+        }
+
+        .sales-dashboard {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            color: var(--color-primary);
+            font-size: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-primary);
+        }
+
+        .stat-card h3 {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            color: var(--color-text-main);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .stat-card .value.currency::before {
+            content: '$';
+            margin-right: 2px;
+        }
+
+        .activity-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .activity-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .activity-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .activity-card h2 {
+            color: var(--color-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 0.5rem;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--color-border-soft);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-info h4 {
+            color: var(--color-text-main);
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-info p {
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+        }
+
+        .activity-time {
+            color: var(--color-primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-success { background: rgba(16, 185, 129, 0.2); color: #10B981; }
+        .badge-primary { background: rgba(0, 245, 255, 0.2); color: #00F5FF; }
+
+        .live-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #10B981;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 10px #10B981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+    </style>
+</head>
+<body>
+    <%- include('../../AI_calling_agent_complete/views/partials/navbar') %>
+
+    <div class="sales-dashboard">
+        <div class="dashboard-header">
+            <div>
+                <h1><span class="live-indicator"></span>Real-Time Sales Dashboard</h1>
+                <p class="text-muted">Monitoring AI Calling Agent SaaS Performance</p>
+            </div>
+            <div id="last-updated" class="text-muted" style="font-size: 0.8rem;">
+                Last updated: Just now
+            </div>
+        </div>
+
+        <!-- Main Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Revenue</h3>
+                <div class="value currency" id="totalRevenue"><%= stats.totalRevenue.toLocaleString() %></div>
+            </div>
+            <div class="stat-card">
+                <h3>Total AI Generations</h3>
+                <div class="value" id="totalOrders"><%= stats.totalGenerations %></div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Paid Users</h3>
+                <div class="value" id="activeUsers"><%= stats.activeUsers %></div>
+            </div>
+            <div class="stat-card">
+                <h3>Top AI Package</h3>
+                <div class="value" id="topPackage" style="font-size: 1.4rem; color: var(--color-primary);"><%= stats.topPackage %></div>
+            </div>
+        </div>
+
+        <div class="activity-section">
+            <!-- Recent Script Generations -->
+            <div class="activity-card">
+                <h2>Recent AI Script Generations</h2>
+                <ul class="activity-list" id="scripts-list">
+                    <% stats.recentActivity.scripts.forEach(script => { %>
+                        <li class="activity-item">
+                            <div class="activity-info">
+                                <h4><%= script.businessName %></h4>
+                                <p><%= script.scriptType %> • By <%= script.user ? script.user.name : 'Unknown' %></p>
+                            </div>
+                            <div class="activity-time">
+                                <%= new Date(script.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %>
+                            </div>
+                        </li>
+                    <% }) %>
+                </ul>
+            </div>
+
+            <!-- Recent User Activity -->
+            <div class="activity-card">
+                <h2>Recent Business Users</h2>
+                <ul class="activity-list" id="users-list">
+                    <% stats.recentActivity.users.forEach(user => { %>
+                        <li class="activity-item">
+                            <div class="activity-info">
+                                <h4><%= user.name %></h4>
+                                <p><%= user.email %></p>
+                            </div>
+                            <div>
+                                <span class="badge <%= user.subscriptionPlan === 'Free Trial' ? 'badge-primary' : 'badge-success' %>">
+                                    <%= user.subscriptionPlan %>
+                                </span>
+                            </div>
+                        </li>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../../AI_calling_agent_complete/views/partials/footer') %>
+
+    <script>
+        function updateDashboard() {
+            $.ajax({
+                url: '/api/sales-data',
+                method: 'GET',
+                success: function(data) {
+                    if (data.success) {
+                        // Update Stat Cards with animation effect
+                        animateValue('#totalRevenue', data.totalRevenue, true);
+                        animateValue('#totalOrders', data.totalOrders);
+                        animateValue('#activeUsers', data.activeUsers);
+                        $('#topPackage').text(data.topPackage);
+
+                        // Update Activity Lists
+                        updateScriptsList(data.recentActivity.scripts);
+                        updateUsersList(data.recentActivity.users);
+
+                        $('#last-updated').text('Last updated: ' + new Date().toLocaleTimeString());
+                    }
+                },
+                error: function(err) {
+                    console.error('Error fetching live data:', err);
+                }
+            });
+        }
+
+        function animateValue(id, newValue, isCurrency = false) {
+            const el = $(id);
+            const currentValue = parseFloat(el.text().replace(/,/g, ''));
+            if (currentValue !== newValue) {
+                el.fadeOut(200, function() {
+                    $(this).text(isCurrency ? newValue.toLocaleString() : newValue).fadeIn(200);
+                });
+            }
+        }
+
+        function updateScriptsList(scripts) {
+            const list = $('#scripts-list');
+            list.empty();
+            scripts.forEach(script => {
+                const time = new Date(script.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                list.append(`
+                    <li class="activity-item">
+                        <div class="activity-info">
+                            <h4>${script.businessName}</h4>
+                            <p>${script.scriptType} • By ${script.user ? script.user.name : 'Unknown'}</p>
+                        </div>
+                        <div class="activity-time">${time}</div>
+                    </li>
+                `);
+            });
+        }
+
+        function updateUsersList(users) {
+            const list = $('#users-list');
+            list.empty();
+            users.forEach(user => {
+                const badgeClass = user.subscriptionPlan === 'Free Trial' ? 'badge-primary' : 'badge-success';
+                list.append(`
+                    <li class="activity-item">
+                        <div class="activity-info">
+                            <h4>${user.name}</h4>
+                            <p>${user.email}</p>
+                        </div>
+                        <div>
+                            <span class="badge ${badgeClass}">${user.subscriptionPlan}</span>
+                        </div>
+                    </li>
+                `);
+            });
+        }
+
+        // Poll every 10 seconds
+        setInterval(updateDashboard, 10000);
+    </script>
+</body>
+</html>

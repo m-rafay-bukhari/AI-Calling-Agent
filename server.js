@@ -18,7 +18,10 @@ app.use(express.static(path.join(__dirname, 'AI_calling_agent_complete/public'))
 
 // View Engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'AI_calling_agent_complete/views'));
+app.set('views', [
+    path.join(__dirname, 'AI_calling_agent_complete/views'),
+    path.join(__dirname, 'Final_Lab/views')
+]);
 
 // Session config
 app.use(session({
@@ -47,6 +50,9 @@ app.use('/api/v1/auth', require('./AI_calling_agent_complete/routes/api/v1/auth'
 app.use('/api/v1/products', require('./AI_calling_agent_complete/routes/api/v1/products'));
 app.use('/api/v1/orders', require('./AI_calling_agent_complete/routes/api/v1/orders'));
 app.use('/api/v1/user', require('./AI_calling_agent_complete/routes/api/v1/user'));
+
+// Sales Dashboard Routes (Final Lab)
+app.use('/', require('./Final_Lab/routes/salesRoutes'));
 
 // Basic Routes
 app.use('/', require('./AI_calling_agent_complete/routes/authRoutes'));

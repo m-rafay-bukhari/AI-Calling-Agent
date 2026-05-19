@@ -13,6 +13,7 @@
         <li><a href="/about">About</a></li>
         <% if(user && user.role === 'admin') { %>
             <li><a href="/admin" class="nav-admin-link">Admin</a></li>
+            <li><a href="/sales" class="nav-admin-link" style="color: var(--color-primary);">Sales</a></li>
         <% } %>
         
         <!-- Mobile-only Auth Links -->
