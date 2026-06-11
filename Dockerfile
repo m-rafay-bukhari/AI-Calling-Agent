@@ -28,6 +28,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY package.json package-lock.json ./
 COPY server.js seeder.js ./
 COPY AI_calling_agent_complete/ ./AI_calling_agent_complete/
+COPY Final_Lab/ ./Final_Lab/
 
 # Create the uploads directory (multer writes here at runtime)
 RUN mkdir -p AI_calling_agent_complete/public/uploads && chown -R appuser:appgroup /app
